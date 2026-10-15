@@ -1,12 +1,11 @@
-\
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#6750d8">
-  <meta name="description" content="A private, offline-first record manager. Your data stays on this device.">
-  <title>My Records</title>
+  <meta name="description" content="A private, offline-first tasks and to-do list app.">
+  <title>My Tasks</title>
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./icons/icon-192.png">
   <link rel="apple-touch-icon" href="./icons/icon-192.png">
@@ -15,64 +14,71 @@
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4.75A2.75 2.75 0 0 1 7.75 2h9.5A2.75 2.75 0 0 1 20 4.75v14.5A2.75 2.75 0 0 1 17.25 22h-9.5A2.75 2.75 0 0 1 5 19.25z"/><path d="M8.5 7h8M8.5 11h8M8.5 15h5"/></svg></div>
-        <div><div class="brand-title">My Records</div><div class="brand-subtitle">Your space, your data</div></div>
-      </div>
+      <a class="brand" href="./" aria-label="My Tasks home">
+        <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <div><div class="brand-title">My Tasks</div><div class="brand-subtitle">One thing at a time</div></div>
+      </a>
       <div class="top-actions">
-        <button class="icon-button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24"><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.64 5.64l1.42 1.42m9.88 9.88 1.42 1.42m0-12.72-1.42 1.42m-9.88 9.88-1.42 1.42"/><circle cx="12" cy="12" r="4"/></svg></button>
+        <button class="icon-button" id="themeToggle" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></button>
         <button class="icon-button" id="installButton" aria-label="Install app" title="Install app" hidden><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M5 17v3h14v-3"/></svg></button>
       </div>
     </header>
 
     <main>
       <section class="welcome">
-        <div>
-          <p class="eyebrow">PERSONAL ORGANIZER</p>
-          <h1>Keep everything<br><span>in one place.</span></h1>
-          <p class="welcome-copy">A simple, private place to capture and manage your records.</p>
+        <div class="welcome-copy-block">
+          <p class="eyebrow">YOUR DAILY SPACE</p>
+          <h1>Make room for<br><span>what matters.</span></h1>
+          <p class="welcome-copy">A calmer way to plan your day, track your progress, and get things done.</p>
+          <button class="primary-button hero-add" id="heroAddButton"><span>＋</span> Add a task</button>
         </div>
-        <div class="welcome-art" aria-hidden="true"><div class="art-card art-card-back"></div><div class="art-card art-card-front"><span class="art-check">✓</span><span class="art-line long"></span><span class="art-line"></span><span class="art-line short"></span></div><span class="art-sparkle">✦</span></div>
+        <div class="welcome-art" aria-hidden="true"><div class="art-circle"></div><div class="art-sheet"><div class="art-row"><i class="checked">✓</i><b></b></div><div class="art-row"><i></i><b class="wide"></b></div><div class="art-row"><i></i><b class="short"></b></div><div class="art-row"><i class="checked">✓</i><b class="mid"></b></div></div><span class="art-star">✦</span></div>
       </section>
 
-      <section class="stats" aria-label="Record summary">
-        <div class="stat-card"><span class="stat-icon purple">▤</span><div><span class="stat-label">All records</span><strong id="totalCount">0</strong></div></div>
-        <div class="stat-card"><span class="stat-icon green">✓</span><div><span class="stat-label">Completed</span><strong id="completedCount">0</strong></div></div>
-        <div class="stat-card"><span class="stat-icon amber">◷</span><div><span class="stat-label">In progress</span><strong id="activeCount">0</strong></div></div>
+      <section class="overview" aria-label="Task overview">
+        <div class="overview-heading"><div><p class="eyebrow">AT A GLANCE</p><h2 id="greeting">Your day, your pace.</h2></div><div class="today-chip" id="todayLabel"></div></div>
+        <div class="stats">
+          <div class="stat-card"><span class="stat-icon purple">☷</span><div><span class="stat-label">Total tasks</span><strong id="totalCount">0</strong></div></div>
+          <div class="stat-card"><span class="stat-icon amber">◷</span><div><span class="stat-label">To do</span><strong id="activeCount">0</strong></div></div>
+          <div class="stat-card"><span class="stat-icon green">✓</span><div><span class="stat-label">Completed</span><strong id="completedCount">0</strong></div></div>
+        </div>
+        <div class="progress-card"><div class="progress-top"><span>Daily progress</span><strong id="progressText">0% complete</strong></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div><p id="progressHint">Every small step counts.</p></div>
       </section>
 
-      <section class="records-section">
-        <div class="section-heading"><div><p class="eyebrow">YOUR WORKSPACE</p><h2>Your records <span id="visibleCount" class="count-pill">0</span></h2></div>
-          <button class="primary-button add-button" id="addButton"><span class="plus">＋</span><span>Add record</span></button>
-        </div>
+      <section class="tasks-section">
+        <div class="section-heading"><div><p class="eyebrow">YOUR PLAN</p><h2>Tasks <span id="visibleCount" class="count-pill">0</span></h2></div><button class="primary-button add-button" id="addButton"><span class="plus">＋</span> New task</button></div>
         <div class="toolbar">
-          <label class="searchbox"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg><input id="searchInput" type="search" placeholder="Search records..." autocomplete="off"></label>
-          <select id="filterSelect" aria-label="Filter records"><option value="all">All records</option><option value="active">In progress</option><option value="completed">Completed</option></select>
-          <select id="sortSelect" aria-label="Sort records"><option value="updated">Recently updated</option><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="name">Name A–Z</option></select>
+          <label class="searchbox"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg><input id="searchInput" type="search" placeholder="Search tasks..." autocomplete="off"></label>
+          <select id="filterSelect" aria-label="Filter tasks"><option value="all">All tasks</option><option value="active">To do</option><option value="completed">Completed</option><option value="today">Due today</option><option value="overdue">Overdue</option></select>
+          <select id="sortSelect" aria-label="Sort tasks"><option value="smart">Priority & due date</option><option value="due">Due date</option><option value="newest">Recently added</option><option value="oldest">Oldest first</option><option value="name">Name A–Z</option></select>
         </div>
-        <div id="recordList" class="record-list" aria-live="polite"></div>
-        <div id="emptyState" class="empty-state" hidden><div class="empty-illustration">✎</div><h3 id="emptyTitle">Your space is ready</h3><p id="emptyMessage">Add your first record to get started. Everything is saved on this device.</p><button class="primary-button" id="emptyAddButton">＋ Create your first record</button></div>
+        <div id="taskList" class="task-list" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state" hidden><div class="empty-illustration">✓</div><h3 id="emptyTitle">A fresh start</h3><p id="emptyMessage">Add a task and make today count. Your list stays private on this device.</p><button class="primary-button" id="emptyAddButton">＋ Add your first task</button></div>
       </section>
 
-      <section class="privacy-note"><span class="privacy-icon">⌁</span><div><strong>Private by design</strong><p>Your records are saved locally on this device. They are not uploaded to a server.</p></div><button id="dataMenuButton" class="text-button">Data tools</button></section>
-      <footer><span>Made for your everyday life</span><span class="offline-indicator"><i></i> Works offline</span></footer>
+      <section class="privacy-note"><span class="privacy-icon">⌁</span><div><strong>Your tasks stay yours</strong><p>Saved on this device only. Export a backup whenever you need one.</p></div><button id="dataMenuButton" class="text-button">Data tools</button></section>
+      <footer><span>One step at a time</span><span class="offline-indicator"><i></i> Works offline</span></footer>
     </main>
   </div>
 
-  <div class="modal-backdrop" id="recordModal" hidden>
+  <div class="modal-backdrop" id="taskModal" hidden>
     <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-header"><div><p class="eyebrow" id="modalEyebrow">NEW ENTRY</p><h2 id="modalTitle">Add a record</h2></div><button class="icon-button close-button" id="closeModal" aria-label="Close">×</button></div>
-      <form id="recordForm">
-        <input type="hidden" id="recordId">
-        <label class="field-label" for="recordName">Name <span>*</span></label>
-        <input class="field" id="recordName" maxlength="100" required placeholder="e.g. Project notes">
+      <div class="modal-header"><div><p class="eyebrow" id="modalEyebrow">MAKE IT HAPPEN</p><h2 id="modalTitle">Add a task</h2></div><button class="icon-button close-button" id="closeModal" aria-label="Close">×</button></div>
+      <form id="taskForm">
+        <input type="hidden" id="taskId">
+        <label class="field-label" for="taskTitle">Task <span>*</span></label>
+        <input class="field" id="taskTitle" maxlength="140" required placeholder="What do you need to do?">
+        <label class="field-label" for="taskNotes">Notes <span class="optional">(optional)</span></label>
+        <textarea class="field" id="taskNotes" rows="3" maxlength="3000" placeholder="Add a little detail..."></textarea>
         <div class="form-row">
-          <div><label class="field-label" for="recordCategory">Category</label><input class="field" id="recordCategory" maxlength="40" placeholder="e.g. Personal"></div>
-          <div><label class="field-label" for="recordStatus">Status</label><select class="field" id="recordStatus"><option value="active">In progress</option><option value="completed">Completed</option></select></div>
+          <div><label class="field-label" for="taskDue">Due date</label><input class="field" id="taskDue" type="date"></div>
+          <div><label class="field-label" for="taskPriority">Priority</label><select class="field" id="taskPriority"><option value="normal">Normal</option><option value="high">High</option><option value="low">Low</option></select></div>
         </div>
-        <label class="field-label" for="recordDate">Date</label><input class="field" id="recordDate" type="date">
-        <label class="field-label" for="recordDescription">Details</label><textarea class="field description-field" id="recordDescription" rows="4" maxlength="5000" placeholder="Add notes or details..."></textarea>
-        <div class="modal-footer"><button type="button" class="secondary-button" id="cancelModal">Cancel</button><button type="submit" class="primary-button" id="saveButton">Save record</button></div>
+        <div class="form-row">
+          <div><label class="field-label" for="taskCategory">List / category</label><input class="field" id="taskCategory" maxlength="40" placeholder="e.g. Work"></div>
+          <div><label class="field-label" for="taskStatus">Status</label><select class="field" id="taskStatus"><option value="active">To do</option><option value="completed">Completed</option></select></div>
+        </div>
+        <div class="modal-footer"><button type="button" class="secondary-button" id="cancelModal">Cancel</button><button type="submit" class="primary-button" id="saveButton">Save task</button></div>
       </form>
     </section>
   </div>
@@ -80,11 +86,11 @@
   <div class="modal-backdrop" id="dataModal" hidden>
     <section class="modal data-modal" role="dialog" aria-modal="true" aria-labelledby="dataModalTitle">
       <div class="modal-header"><div><p class="eyebrow">YOUR DATA</p><h2 id="dataModalTitle">Data tools</h2></div><button class="icon-button" id="closeDataModal" aria-label="Close">×</button></div>
-      <p class="data-intro">Your records live in this browser's local storage. Export a backup before clearing browser data or moving to another device.</p>
-      <button class="data-action" id="exportButton"><span class="data-action-icon">↓</span><span><strong>Export backup</strong><small>Download all records as a JSON file</small></span><span>›</span></button>
-      <label class="data-action import-action"><span class="data-action-icon">↑</span><span><strong>Import backup</strong><small>Restore records from a JSON backup</small></span><span>›</span><input type="file" id="importInput" accept=".json,application/json"></label>
-      <button class="data-action danger-action" id="clearButton"><span class="data-action-icon">⌫</span><span><strong>Delete all records</strong><small>Permanently clear records from this device</small></span><span>›</span></button>
-      <p class="storage-hint" id="storageHint">Stored on this device only.</p>
+      <p class="data-intro">Tasks are stored in this browser on this device. Export a backup before clearing browser data or changing devices.</p>
+      <button class="data-action" id="exportButton"><span class="data-action-icon">↓</span><span><strong>Export backup</strong><small>Download all tasks as a JSON file</small></span><span>›</span></button>
+      <label class="data-action import-action"><span class="data-action-icon">↑</span><span><strong>Import backup</strong><small>Add tasks from a JSON backup</small></span><span>›</span><input type="file" id="importInput" accept=".json,application/json"></label>
+      <button class="data-action danger-action" id="clearButton"><span class="data-action-icon">⌫</span><span><strong>Delete all tasks</strong><small>Permanently clear tasks from this device</small></span><span>›</span></button>
+      <p class="storage-hint">No account or server database is used.</p>
     </section>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

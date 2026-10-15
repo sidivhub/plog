@@ -1,36 +1,7 @@
-{
-  "id": "./",
-  "name": "My Records \u2014 Private Organizer",
-  "short_name": "My Records",
-  "description": "A private offline-first record manager. Your data stays on this device.",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#f7f7fb",
-  "theme_color": "#6750d8",
-  "categories": [
-    "productivity",
-    "utilities"
-  ],
-  "icons": [
-    {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ]
-}
+"id":"./","name":"My Tasks — To-do Planner","short_name":"My Tasks",
+ "description":"A private, offline-first tasks and to-do list app.",
+ "start_url":"./","scope":"./","display":"standalone","orientation":"portrait-primary",
+ "background_color":"#f7f7fb","theme_color":"#6750d8","categories":["productivity","utilities"],
+ "icons":[{"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+          {"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+          {"src":"./icons/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]
