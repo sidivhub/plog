@@ -167,6 +167,26 @@
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installButton').hidden=false;});
   $('installButton').addEventListener('click',async()=>{if(!installPrompt){showToast('Open your browser menu and choose Install app or Add to Home screen.');return;}installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installButton').hidden=true;});
   window.addEventListener('appinstalled',()=>{$('installButton').hidden=true;showToast('App installed');});
-  if('serviceWorker'in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+  
+if ('serviceWorker' in navigator &&
+    (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', async () => {
+    try {
+      const registration =
+        await navigator.serviceWorker.register('./sw.js');
+
+      console.info(
+        'Service worker registered:',
+        registration.scope
+      );
+    } catch (error) {
+      console.error(
+        'Service worker registration failed:',
+        error
+      );
+    }
+  });
+}
+
   render();
 })();
